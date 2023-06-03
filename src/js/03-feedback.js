@@ -1,23 +1,23 @@
-import _ from 'lodash';
+import throttle from 'lodash.throttle';
 
 const feedbackFormEl = document.querySelector('.feedback-form');
 
 const objFeedback = {};
 
 try {
-  feedbackFormEl[0].value = objFeedback.email = JSON.parse(
+  feedbackFormEl.email.value = objFeedback.email = JSON.parse(
     localStorage.getItem('feedback-form-state')
   ).email;
 } catch (error) {
-  feedbackFormEl[0].value = objFeedback.email = '';
+  feedbackFormEl.email.value = objFeedback.email = '';
 }
 
 try {
-  feedbackFormEl[1].value = objFeedback.message = JSON.parse(
+  feedbackFormEl.message.value = objFeedback.message = JSON.parse(
     localStorage.getItem('feedback-form-state')
   ).message;
 } catch (error) {
-  feedbackFormEl[1].value = objFeedback.message = '';
+  feedbackFormEl.message.value = objFeedback.message = '';
 }
 
 const saveInputInLocalStorage = function (evt) {
@@ -32,7 +32,7 @@ const saveInputInLocalStorage = function (evt) {
 
 feedbackFormEl.addEventListener(
   'input',
-  _.throttle(saveInputInLocalStorage, 500)
+  throttle(saveInputInLocalStorage, 500)
 );
 
 const submitFunc = function (evt) {
@@ -42,8 +42,11 @@ const submitFunc = function (evt) {
   }
   console.log(objFeedback);
   localStorage.removeItem('feedback-form-state');
-  feedbackFormEl[0].value = objFeedback.email = '';
-  feedbackFormEl[1].value = objFeedback.email = '';
+  feedbackFormEl.email.value = objFeedback.email = '';
+  feedbackFormEl.message.value = objFeedback.message = '';
+  console.log(objFeedback);
 };
 
 feedbackFormEl.addEventListener('submit', submitFunc);
+
+console.log(objFeedback);
