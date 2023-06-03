@@ -37,8 +37,10 @@ feedbackFormEl.addEventListener(
 
 const submitFunc = function (evt) {
   evt.preventDefault();
+  if (!objFeedback.email || !objFeedback.message) {
+    return console.log('Заповніть усі поля');
+  }
   console.log(objFeedback);
-
   localStorage.removeItem('feedback-form-state');
   feedbackFormEl[0].value = objFeedback.email = '';
   feedbackFormEl[1].value = objFeedback.email = '';
